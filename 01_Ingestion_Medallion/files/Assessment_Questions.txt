@@ -1,0 +1,297 @@
+Hi Archi Garg,
+
+Thanks for the profile, can you please inform the candidates to submit the assessment as well,
+
+Attached are the source files.
+----------------------
+Hands-on Coding Assessment for Data Engineer
+Focus: Microsoft Fabric, Databricks, Power BI, data modeling, Delta Lake, governance, and scalable pipelines
+Assessment format
+Ask the candidate to submit:
+•	Source code in Git 
+•	README with setup and run steps 
+•	Architecture/design notes 
+•	Screenshots or exported outputs where UI work is involved 
+•	SQL, PySpark, DAX, and pipeline definitions 
+•	A short assumptions document 
+Recommended total duration: 8 to 12 hours, split across 6 exercises.
+________________________________________
+1) Lakehouse Ingestion and Medallion Pipeline
+Objective
+Build an end-to-end batch pipeline that ingests raw enterprise-style data into a Bronze, Silver, and Gold Lakehouse structure using Databricks or Microsoft Fabric Lakehouse.
+Scenario
+You are given these source files:
+•	customers.csv 
+•	products.csv 
+•	orders.csv 
+•	order_items.json 
+•	returns.csv 
+The data includes common quality issues:
+•	duplicate customer records 
+•	null values 
+•	invalid product IDs 
+•	inconsistent date formats 
+•	late arriving orders 
+Candidate tasks
+1.	Ingest all files into Bronze tables exactly as received. 
+2.	Clean and standardize data into Silver tables. 
+3.	Build Gold tables for analytics: 
+o	fact_sales 
+o	fact_returns 
+o	dim_customer 
+o	dim_product 
+o	dim_date 
+4.	Use Delta tables. 
+5.	Implement incremental loading logic. 
+6.	Add basic audit columns such as: 
+o	ingestion timestamp 
+o	source file name 
+o	pipeline run ID 
+7.	Document how bad records are handled. 
+Expected deliverables
+•	PySpark notebooks or scripts 
+•	SQL scripts for table creation 
+•	Folder/table structure showing Bronze/Silver/Gold 
+•	README explaining pipeline flow 
+•	Sample output from Gold tables 
+What to evaluate
+•	Lakehouse design quality 
+•	Delta Lake usage 
+•	Incremental processing logic 
+•	Data cleansing approach 
+•	Code readability and modularity 
+•	Error handling 
+Scoring guide
+•	25% ingestion design 
+•	25% transformation quality 
+•	20% Delta and incremental handling 
+•	15% maintainability 
+•	15% documentation 
+________________________________________
+2) Advanced PySpark Transformation and Performance Optimization
+Objective
+Test PySpark and Spark SQL capability for large-scale transformations and performance tuning.
+Scenario
+The candidate receives a large transaction dataset with 20M+ rows or a simulated equivalent.
+Candidate tasks
+1.	Build transformations to produce: 
+o	daily sales by region 
+o	top 10 products by category 
+o	customer lifetime value 
+o	monthly return rate 
+2.	Use PySpark and/or Spark SQL. 
+3.	Optimize performance by applying at least 3 of the following: 
+o	partitioning 
+o	caching/persisting 
+o	broadcast joins 
+o	predicate pushdown 
+o	file compaction 
+o	Z-ordering or equivalent 
+4.	Compare naïve vs optimized approach. 
+5.	Explain performance decisions. 
+Expected deliverables
+•	PySpark code 
+•	Before/after runtime comparison 
+•	Short note on optimization decisions 
+•	Output datasets 
+What to evaluate
+•	Spark transformation skills 
+•	Understanding of distributed processing 
+•	Performance tuning awareness 
+•	Proper join strategy and partitioning decisions 
+Scoring guide
+•	35% correctness 
+•	30% optimization quality 
+•	20% explanation of trade-offs 
+•	15% code structure 
+________________________________________
+3) Dimensional Data Modeling Exercise
+Objective
+Assess enterprise data modeling capability for analytics and BI.
+Scenario
+A retail business wants reporting for:
+•	sales performance 
+•	returns analysis 
+•	customer behavior 
+•	product category trends 
+•	regional revenue 
+Candidate tasks
+1.	Design: 
+o	conceptual model 
+o	logical model 
+o	physical model 
+2.	Create a dimensional warehouse model using: 
+o	Star schema for reporting 
+o	one Snowflake extension where justified 
+3.	Define: 
+o	grain of each fact table 
+o	surrogate keys 
+o	slowly changing dimension approach 
+o	conformed dimensions 
+4.	Write DDL for key dimension and fact tables. 
+5.	Explain how the model supports Power BI semantic modeling. 
+Expected deliverables
+•	ER diagram or schema diagram 
+•	DDL scripts 
+•	Design notes 
+•	Explanation of fact/dimension choices 
+Suggested entities
+•	Sales orders 
+•	Customers 
+•	Products 
+•	Stores 
+•	Promotions 
+•	Returns 
+•	Dates 
+What to evaluate
+•	Correct dimensional thinking 
+•	Fact grain clarity 
+•	SCD handling 
+•	Business-friendly design 
+•	Readiness for semantic models 
+Scoring guide
+•	30% model correctness 
+•	25% dimensional design quality 
+•	20% DDL quality 
+•	15% semantic model readiness 
+•	10% documentation 
+________________________________________
+4) Microsoft Fabric Data Factory / Orchestration Challenge
+Objective
+Evaluate orchestration, scheduling, dependency management, and operational design in Microsoft Fabric.
+Scenario
+Build a Fabric pipeline that runs the batch ingestion and transformation flow.
+Candidate tasks
+1.	Create a pipeline in Fabric Data Factory or equivalent orchestration layer. 
+2.	The pipeline must: 
+o	ingest multiple source files 
+o	trigger Bronze to Silver to Gold 
+o	include dependencies between stages 
+o	support parameterized file paths or environments 
+3.	Add: 
+o	retry logic 
+o	failure handling 
+o	notification/logging approach 
+4.	Include a metadata-driven design where possible. 
+5.	Show how the same pipeline could run for dev/test/prod. 
+Expected deliverables
+•	Pipeline screenshots or exported JSON 
+•	Parameter/config design 
+•	Explanation of orchestration flow 
+•	Monitoring/error-handling notes 
+What to evaluate
+•	Fabric pipeline knowledge 
+•	Reusability and parameterization 
+•	Operational maturity 
+•	Monitoring and supportability 
+Scoring guide
+•	30% orchestration completeness 
+•	25% parameterization and reusability 
+•	20% error handling 
+•	15% environment strategy 
+•	10% clarity of documentation 
+________________________________________
+5) Power BI Semantic Model and DAX Optimization Exercise
+Objective
+Assess Power BI modeling and reporting readiness from an engineered dataset.
+Scenario
+Using the Gold layer from earlier tasks, build a Power BI semantic model for business reporting.
+Candidate tasks
+1.	Create a Power BI model with: 
+o	fact and dimension relationships 
+o	appropriate cardinality and filter direction 
+o	date table 
+2.	Develop at least 8 measures, such as: 
+o	Total Sales 
+o	Net Sales 
+o	Gross Margin % 
+o	Return Rate 
+o	Average Order Value 
+o	YoY Sales Growth 
+o	Customer Count 
+o	Top Product Rank 
+3.	Implement: 
+o	incremental refresh strategy 
+o	at least one aggregation strategy or performance optimization 
+o	row-level security for Region Manager 
+4.	Create 1–2 report pages showing business insights. 
+5.	Explain design decisions for semantic model performance. 
+Expected deliverables
+•	Power BI file or screenshots 
+•	DAX measures 
+•	Data model diagram 
+•	RLS definition 
+•	Short explanation of optimization approach 
+What to evaluate
+•	Data model quality 
+•	DAX correctness 
+•	Performance awareness 
+•	RLS implementation 
+•	BI usability 
+Scoring guide
+•	25% model design 
+•	25% DAX quality 
+•	20% performance optimization 
+•	15% RLS 
+•	15% dashboard usability 
+________________________________________
+6) Data Quality, Governance, and Streaming Mini-Project
+Objective
+Test governance mindset and ability to design reliable, monitored pipelines, including near-real-time ingestion.
+Scenario
+A business wants near-real-time order ingestion from Event Hub/Kafka-style events plus quality controls and lineage visibility.
+Candidate tasks
+1.	Simulate or implement a streaming ingestion flow for order events. 
+2.	Ingest streaming data into Bronze and transform to Silver. 
+3.	Apply quality rules such as: 
+o	no null order ID 
+o	valid customer ID 
+o	quantity > 0 
+o	event timestamp validation 
+4.	Separate valid and invalid records. 
+5.	Add a simple monitoring table/report with: 
+o	record counts 
+o	failed record counts 
+o	latency 
+o	latest successful run 
+6.	Propose governance features: 
+o	lineage 
+o	data catalog metadata 
+o	access controls 
+o	retention/versioning 
+7.	Explain how Power BI consumers can trust the dataset. 
+Expected deliverables
+•	Streaming or simulated micro-batch code 
+•	Quality validation logic 
+•	Monitoring output 
+•	Governance design note 
+What to evaluate
+•	Streaming concepts 
+•	Data quality implementation 
+•	Operational thinking 
+•	Governance awareness 
+•	Practicality of design 
+Scoring guide
+•	25% streaming pipeline 
+•	25% data quality controls 
+•	20% monitoring 
+•	20% governance design 
+•	10% documentation 
+________________________________________
+Submission instructions for candidates
+Ask candidates to submit the following:
+Mandatory
+•	Git repository 
+•	README with setup, assumptions, and execution steps 
+•	Architecture diagram 
+•	SQL scripts 
+•	PySpark notebooks/scripts 
+•	Power BI screenshots or PBIX if allowed 
+•	Pipeline screenshots/export 
+•	Short document describing optimization, governance, and trade-offs 
+Nice to have
+•	CI/CD pipeline YAML 
+•	Unit tests or data validation tests 
+•	Reusable config-driven framework 
+•	Deployment notes for Fabric/Databricks 
+________________________________________
