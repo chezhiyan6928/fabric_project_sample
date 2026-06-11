@@ -1,9 +1,9 @@
 # Enterprise Data Engineering Lifecycle Platform
 
 ## 📌 Project Overview
-[span_0](start_span)This repository contains a production-grade, end-to-end implementation of an enterprise data engineering platform designed for **NTT Data**[span_0](end_span). [span_1](start_span)The solution demonstrates operational excellence across the entire data lifecycle—spanning real-time streaming, batch ingestion, complex transformations, performance tuning, dimensional data modeling, automated orchestration, and business intelligence semantic layers[span_1](end_span).
+This repository contains a production-grade, end-to-end implementation of an enterprise data engineering platform designed for **NTT Data** The solution demonstrates operational excellence across the entire data lifecycle—spanning real-time streaming, batch ingestion, complex transformations, performance tuning, dimensional data modeling, automated orchestration, and business intelligence semantic layers.
 
-[span_2](start_span)The architecture is built natively around **Microsoft Fabric**, **Azure Databricks**, and **Power BI**, utilizing best practices in Delta Lake optimization, data quality gating, and metadata-driven governance[span_2](end_span).
+The architecture is built natively around **Microsoft Fabric**, **Azure Databricks**, and **Power BI**, utilizing best practices in Delta Lake optimization, data quality gating, and metadata-driven governance.
 
 ---
 
