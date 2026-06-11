@@ -1,0 +1,7 @@
+customer_id,name,email,country,created_at
+1,Alice,alice@mail.com,DE,2023-01-01
+2,Bob,bob@mail.com,DE,2023-02-10
+3,Charlie,charlie@mail.com,FR,2023-03-05
+4,Diana,diana@mail.com,IN,2023-03-20
+5,Eve,eve@mail.com,US,2023-04-01
+5,Eve_dup,eve@mail.com,US,2023-04-01
