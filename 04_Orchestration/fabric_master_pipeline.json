@@ -1,0 +1,106 @@
+{
+    "name": "pl_master_medallion_orchestrator",
+    "properties": {
+        "description": "Enterprise master orchestration pipeline with parameters, dependency loops, and notification logic.",
+        "activities": [
+            {
+                "name": "Set Environment Base Path",
+                "type": "SetVariable",
+                "dependsOn": [],
+                "policy": { "secureOutput": false, "secureInput": false },
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": "v_environment_path",
+                    "value": {
+                        "value": "@if(equals(pipeline().parameters.p_env, 'prod'), 'abfss://data@prodstorage.dfs.core.windows.net/', 'abfss://data@devstorage.dfs.core.windows.net/')",
+                        "type": "Expression"
+                    }
+                }
+            },
+            {
+                "name": "Execute Bronze Ingestion",
+                "type": "FabricNotebook",
+                "dependsOn": [
+                    { "activity": "Set Environment Base Path", "dependencyConditions": ["Succeeded"] }
+                ],
+                "policy": {
+                    "timeout": "0.2 Broadway:00:00",
+                    "retry": 3,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "nb_bronze_raw_ingestion",
+                    "parameters": {
+                        "p_target_path": { "value": "@variables('v_environment_path')", "type": "Expression" },
+                        "p_run_id": { "value": "@pipeline().RunId", "type": "Expression" }
+                    }
+                }
+            },
+            {
+                "name": "Execute Silver Cleansing",
+                "type": "FabricNotebook",
+                "dependsOn": [
+                    { "activity": "Execute Bronze Ingestion", "dependencyConditions": ["Succeeded"] }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 2,
+                    "retryIntervalInSeconds": 60,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "nb_silver_cleansing_quarantine",
+                    "parameters": {
+                        "p_target_path": { "value": "@variables('v_environment_path')", "type": "Expression" }
+                    }
+                }
+            },
+            {
+                "name": "Execute Gold Dimension tables",
+                "type": "FabricNotebook",
+                "dependsOn": [
+                    { "activity": "Execute Silver Cleansing", "dependencyConditions": ["Succeeded"] }
+                ],
+                "typeProperties": {
+                    "notebookId": "nb_gold_dimensions"
+                }
+            },
+            {
+                "name": "Execute Gold Fact tables",
+                "type": "FabricNotebook",
+                "dependsOn": [
+                    { "activity": "Execute Gold Dimension tables", "dependencyConditions": ["Succeeded"] }
+                ],
+                "typeProperties": {
+                    "notebookId": "nb_gold_facts"
+                }
+            },
+            {
+                "name": "Send Failure Notification",
+                "type": "TeamsNotificationOrWebhook",
+                "dependsOn": [
+                    { "activity": "Execute Bronze Ingestion", "dependencyConditions": ["Failed"] },
+                    { "activity": "Execute Silver Cleansing", "dependencyConditions": ["Failed"] },
+                    { "activity": "Execute Gold Fact tables", "dependencyConditions": ["Failed"] }
+                ],
+                "typeProperties": {
+                    "message": "Pipeline Failure Alert! Run ID: @{pipeline().RunId}. Component failed during execution."
+                }
+            }
+        ],
+        "parameters": {
+            "p_env": {
+                "type": "string",
+                "defaultValue": "dev"
+            }
+        },
+        "variables": {
+            "v_environment_path": {
+                "type": "string"
+            }
+        }
+    }
+}
